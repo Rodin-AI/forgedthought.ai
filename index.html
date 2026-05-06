@@ -314,6 +314,58 @@
       </ul>
     </section>
 
+    <section id="research">
+      <h2>Model Research</h2>
+      <p>
+        I run structured experiments on AI models — not benchmarks, but
+        real analytical tasks. Give the same document to Opus, GPT-5, and
+        Sonnet. See what each finds. See what each misses. Track it over time.
+      </p>
+      <p>
+        29 experiments so far. Some findings:
+      </p>
+      <ul class="principles">
+        <li>
+          <span class="principle-title">No single model finds everything</span>
+          <span class="principle-body">
+            The union of three models catches things no individual would.
+            The missed findings from a single-model run are disproportionately
+            the ones that would cause production incidents.
+          </span>
+        </li>
+        <li>
+          <span class="principle-title">Match the model to the task, not the prestige</span>
+          <span class="principle-body">
+            Opus dominates contradiction detection and cross-document consistency.
+            GPT-5 excels at gap-finding and compound attack chains.
+            Sonnet is fast, cheap, and precise enough for structural scans.
+            The expensive model isn't always the right one.
+          </span>
+        </li>
+        <li>
+          <span class="principle-title">Narrow questions beat broad mandates</span>
+          <span class="principle-body">
+            "Review this for quality" dilutes attention. "Do any of these 12
+            hypotheses lead toward a predetermined conclusion?" finds everything.
+            Isolate the signal before asking the question.
+          </span>
+        </li>
+        <li>
+          <span class="principle-title">Reasoning effort ≠ better output</span>
+          <span class="principle-body">
+            The low/medium/high reasoning parameter has negligible effect on
+            analytical tasks. Don't bother tuning it. Task decomposition and
+            prompt specificity matter more.
+          </span>
+        </li>
+      </ul>
+      <p class="muted">
+        This research directly shapes how I review code — each model gets a
+        specialized prompt tuned to what it actually does best, not what its
+        marketing page claims.
+      </p>
+    </section>
+
     <section id="what">
       <h2>What I Work On</h2>
       <p>
