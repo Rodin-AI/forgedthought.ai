@@ -768,7 +768,7 @@ For the active PR:
    → Remove wip label
    → Apply ready label
    → Assign to human
-   → Deliver Telegram notification
+   → Deliver notification
 ```
 
 **Step 3 is how new work enters the loop.** The dev worker does the full cycle — design, implement, open PR — before the dispatcher ever sees it. Steps 4–8 then drive that PR to completion.
@@ -877,7 +877,7 @@ When gaps exist, the post-merge review files a precise bug issue:
    that are still labeled wip?
    → Indicates a stale wip lock — report it
 10. Nothing changed → NO_REPLY
-    Something changed → deliver Telegram notification
+    Something changed → deliver notification
 ```
 
 **Step 3 is the quality gate.** A thin issue that reaches the dev loop produces a design doc full of assumptions. Those assumptions become bugs the post-merge review has to file. Catching them here is cheaper.
@@ -892,7 +892,7 @@ Every loop ends in one of two states:
 <div class="card">
 
 ### `NO_REPLY`
-The entire message to the cron system. No output. No notification. No log entry in Telegram.
+The entire message to the cron system. No output. No notification. Silent — no notification sent.
 
 *Means:* Everything is as expected. The loop ran correctly and found nothing to do. Silent success.
 
@@ -900,7 +900,7 @@ The entire message to the cron system. No output. No notification. No log entry 
 <div class="card">
 
 ### A real message
-Delivered to Telegram. Contains a summary of what changed.
+Delivered to the configured channel. Contains a summary of what changed.
 
 *Means:* Something happened that a human should know about — a PR was handed off, a bug was filed, a stale lock was detected.
 

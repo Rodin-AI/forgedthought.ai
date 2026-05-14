@@ -6209,7 +6209,7 @@ For the active PR:
    → Remove wip label
    → Apply ready label
    → Assign to human
-   → Deliver Telegram notification
+   → Deliver notification
 </code></pre>
 <p><strong>Step 3 is how new work enters the loop.</strong> The dev worker does the full cycle — design, implement, open PR — before the dispatcher ever sees it. Steps 4–8 then drive that PR to completion.</p>
 </section>
@@ -7310,7 +7310,7 @@ section.divider p {
    that are still labeled wip?
    → Indicates a stale wip lock — report it
 10. Nothing changed → NO_REPLY
-    Something changed → deliver Telegram notification
+    Something changed → deliver notification
 </code></pre>
 <p><strong>Step 3 is the quality gate.</strong> A thin issue that reaches the dev loop produces a design doc full of assumptions. Those assumptions become bugs the post-merge review has to file. Catching them here is cheaper.</p>
 </section>
@@ -7573,12 +7573,12 @@ section.divider p {
 <div class="cols">
 <div class="card">
 <h3 id="no_reply"><code>NO_REPLY</code></h3>
-<p>The entire message to the cron system. No output. No notification. No log entry in Telegram.</p>
+<p>The entire message to the cron system. No output. No notification. Silent — no notification sent.</p>
 <p><em>Means:</em> Everything is as expected. The loop ran correctly and found nothing to do. Silent success.</p>
 </div>
 <div class="card">
 <h3 id="a-real-message">A real message</h3>
-<p>Delivered to Telegram. Contains a summary of what changed.</p>
+<p>Delivered to the configured channel. Contains a summary of what changed.</p>
 <p><em>Means:</em> Something happened that a human should know about — a PR was handed off, a bug was filed, a stale lock was detected.</p>
 </div>
 </div>
