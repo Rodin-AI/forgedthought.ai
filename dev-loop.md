@@ -427,6 +427,13 @@ The loop runs on a schedule. Every 10 minutes, it checks state and takes exactly
   <div class="loop-step">Open PR?</div>
   <div class="loop-arrow">→ no →</div>
   <div class="loop-step">Open issues?</div>
+  <div class="loop-arrow">→ no →</div>
+  <div class="loop-step" style="border-color: var(--slate); color: var(--slate)">NO_REPLY</div>
+</div>
+<div class="loop" style="font-size: 1rem; margin: 0.2em 0 0.6em">
+  <div class="loop-step">Open PR?</div>
+  <div class="loop-arrow">→ no →</div>
+  <div class="loop-step">Open issues?</div>
   <div class="loop-arrow">→ yes →</div>
   <div class="loop-step">Spawn dev worker</div>
   <div class="loop-arrow">→</div>
