@@ -271,7 +271,7 @@ style: |
     <div class="loop-arrow">→</div>
     <div class="loop-step">Review</div>
     <div class="loop-arrow">→</div>
-    <div class="loop-step">Audit</div>
+    <div class="loop-step">Post-Merge</div>
     <div class="loop-arrow">→</div>
     <div class="loop-step">Triage</div>
     <div class="loop-arrow">→</div>
@@ -307,7 +307,7 @@ Most AI coding tools are autocomplete with confidence. They generate code that c
 <div class="card">
 
 ### The Answer
-A self-correcting loop. Design documents anchor intent. A dev loop builds and reviews. A PR audit checks whether the issue was actually solved. Triage keeps the board clean. Each loop feeds the next.
+A self-correcting loop. Design documents anchor intent. A dev loop builds and reviews. A post-merge review checks whether the issue was actually solved. Triage keeps the board clean. Each loop feeds the next.
 
 </div>
 </div>
@@ -322,7 +322,7 @@ This system is built on one conviction: **quality is not a gate at the end — i
 
 <ul class="principles" style="margin-top: 1em">
 <li><span class="pl-title">Slow is smooth, smooth is fast</span><br><span class="pl-body">A design doc written up front saves five rebases later. Time spent orienting saves time spent correcting.</span></li>
-<li><span class="pl-title">Two is one and one is none</span><br><span class="pl-body">Verify everything. One review catches some things. Three independent reviews catch most things. Audit after merge catches the rest.</span></li>
+<li><span class="pl-title">Two is one and one is none</span><br><span class="pl-body">Verify everything. One review catches some things. Three independent reviews catch most things. Post-merge review catches the rest.</span></li>
 <li><span class="pl-title">Don't guess. Don't assume.</span><br><span class="pl-body">Every decision is anchored to a document. Every review is anchored to a commit SHA. Ambiguity compounds into debt.</span></li>
 <li><span class="pl-title">The human's time is sacred</span><br><span class="pl-body">Everything they see is finished, tested, reviewed, and clean. If it's not done, they don't see it. Assignment is the signal.</span></li>
 </ul>
@@ -372,7 +372,7 @@ Issue → Read issue body + comments
 ```
 
 **What the plan locks in:**
-- The exact acceptance criteria that will be verified at PR audit
+- The exact acceptance criteria that will be verified at post-merge review
 - The architectural approach — so review bots know *why* the code looks the way it does
 - The test strategy — so CI failures have a clear diagnosis path
 
@@ -399,7 +399,7 @@ Bot reviewers evaluate code against the design intent, not just style. *"Does th
 **At self-review**
 The pre-push self-review checks each acceptance criterion explicitly. A clean self-review requires all criteria accounted for.
 
-**At PR audit**
+**At post-merge review**
 After merge, the post-merge skill reads the issue, finds the acceptance criteria, and verifies the PR delivered each one. Anything missed → a new bug issue.
 
 </div>
@@ -407,7 +407,7 @@ After merge, the post-merge skill reads the issue, finds the acceptance criteria
 
 <div class="rule"></div>
 
-*Remove the design document and the audit has nothing to verify against. The loop collapses into vibes.*
+*Remove the design document and the post-merge review has nothing to verify against. The loop collapses into vibes.*
 
 ---
 
@@ -489,9 +489,9 @@ When the <code>gpt-review-bot</code> CI job was still in-flight, the dev loop re
 
 ---
 
-## The PR Audit Loop
+## The Post-Merge Review Loop
 
-After a PR merges, the dev loop's job is done — but the **audit loop** starts.
+After a PR merges, the dev loop's job is done — but the **post-merge review loop** starts.
 
 **The post-merge review runs hourly.** It reads each merged PR, finds the linked issue, and checks:
 
@@ -502,13 +502,13 @@ After a PR merges, the dev loop's job is done — but the **audit loop** starts.
 **When it finds a gap:**
 
 <div class="example">
-<span class="label">review-bot PR #117 — post-merge audit</span>
-PR #117 added <code>CommitID</code> to <code>vcs.ReviewRequest</code>. Audit found all 4 acceptance criteria satisfied. No issues created. Clean.
+<span class="label">review-bot PR #117 — post-merge review</span>
+PR #117 added <code>CommitID</code> to <code>vcs.ReviewRequest</code>. Post-merge review found all 4 acceptance criteria satisfied. No issues created. Clean.
 </div>
 
 <div class="example">
-<span class="label">gargoyle PR #771 — post-merge audit</span>
-PR #771 fixed <code>ingest_bars/2</code>. Audit found 3 of 4 criteria met — but criterion 2 ("chosen approach documented in design doc") was addressed only via inline comment, not in <code>docs/</code>. Issue #773 filed automatically.
+<span class="label">gargoyle PR #771 — post-merge review</span>
+PR #771 fixed <code>ingest_bars/2</code>. Post-merge review found 3 of 4 criteria met — but criterion 2 ("chosen approach documented in design doc") was addressed only via inline comment, not in <code>docs/</code>. Issue #773 filed automatically.
 </div>
 
 ---
@@ -592,16 +592,16 @@ Each loop reads a different kind of document and produces a different kind of ou
 </div>
 <div class="card">
 
-### PR audit
+### post-merge review
 *Reads:* issue, design doc, merged PR diff  
 *Produces:* gap analysis, bug issues
 
 </div>
 </div>
 
-**The chain:** Design doc → code → review → merge → audit. Remove any link and the chain breaks.
+**The chain:** Design doc → code → review → merge → post-merge review. Remove any link and the chain breaks.
 
-<blockquote>A PR audit without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
+<blockquote>A post-merge review without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
 
 ---
 
@@ -636,7 +636,7 @@ Execute the post-merge-review skill for the review-bot project.
 Read ~/.openclaw/workspace/skills/post-merge-review/SKILL.md
 and follow it exactly.
 Load project config from memory/projects/review-bot.yaml.
-If no new PRs were audited, respond with exactly NO_REPLY.
+If no new PRs were reviewed, respond with exactly NO_REPLY.
 ```
 
 **The skill file contains the actual logic.** Rules, step sequences, error handling, the `NO_REPLY` contract. This means:
@@ -723,7 +723,7 @@ The dev loop is a **dispatcher, not a worker.** It reads state and makes one dec
 
 ---
 
-## PR Audit Loop: Step by Step
+## Post-Merge Review Loop: Step by Step
 
 ```
 1. Read project config + state file (lastReviewedMergedAt, reviewedPRs)
@@ -743,29 +743,29 @@ For each new PR:
 11. Update state file: add PR to reviewedPRs, update lastReviewedMergedAt
 ```
 
-**The state file is the audit's memory.** Without it, every run re-audits every PR. With it, the loop is incremental — only new merges.
+**The state file is the post-merge review's memory.** Without it, every run re-reviews every PR. With it, the loop is incremental — only new merges.
 
 ---
 
-## PR Audit Loop: The Gap Pattern
+## Post-Merge Review Loop: The Gap Pattern
 
 Most PRs have no gaps — the loop returns `NO_REPLY` in 20 seconds.
 
-When gaps exist, the audit files a precise bug issue:
+When gaps exist, the post-merge review files a precise bug issue:
 
 <div class="example">
-<span class="label">review-bot issue #84 — auto-filed by audit</span>
+<span class="label">review-bot issue #84 — auto-filed by post-merge review</span>
 <strong>PR #83: vcs/util.go not delivered</strong><br>
 "Issue #82 acceptance criterion 3 required GetAllFilesInPath and BuildLineToPositionMap in the vcs package. These functions appear in review.go (the old location) but were not extracted to vcs/util.go as specified. The file vcs/util.go does not exist in the merged commit."
 </div>
 
 <div class="example">
-<span class="label">gargoyle issue #773 — auto-filed by audit</span>
+<span class="label">gargoyle issue #773 — auto-filed by post-merge review</span>
 <strong>PR #771: fail-safe approach not documented</strong><br>
 "Issue #763 acceptance criterion 2 requires the chosen approach to be documented in the design doc. The fail-safe logic is explained in inline code comments in ingest_bars.ex but is not recorded in any file under docs/. The acceptance criterion is not satisfied."
 </div>
 
-*These are bugs that human reviewers would never catch — because by the time the audit runs, the code is already merged and "done."*
+*These are bugs that human reviewers would never catch — because by the time the post-merge review runs, the code is already merged and "done."*
 
 ---
 
@@ -848,7 +848,7 @@ review-bot is a Go service that reviews PRs on Gitea using AI. It was built almo
 - Issue triage and dependency labeling
 - Pre-code design documents
 - PR creation, review, self-review
-- Post-merge gap audits
+- Post-merge reviews
 - Bot review experiments (Sonnet vs GPT-5 vs Opus)
 
 </div>
@@ -882,8 +882,8 @@ PR #117 created. gpt-review-bot flagged 2 findings. Worker fixed them, pushed. B
 </div>
 
 <div class="example">
-<span class="label">Step 3 — PR audit</span>
-After merge: audit read issue #114, checked all 4 criteria against the merged diff. All satisfied — CommitID added, threaded through all layers, tests cover all new behaviors. No issues filed.
+<span class="label">Step 3 — post-merge review</span>
+After merge: post-merge review read issue #114, checked all 4 criteria against the merged diff. All satisfied — CommitID added, threaded through all layers, tests cover all new behaviors. No issues filed.
 </div>
 
 ---
@@ -898,8 +898,8 @@ review.go and identity.go deleted, consolidated into reviews.go. Build error fix
 </div>
 
 <div class="example">
-<span class="label">PR audit — what was found</span>
-Audit verified criterion 1 (build error fixed ✓) and criterion 2 (duplicate declaration removed ✓). The pagination addition was a bonus — correctly noted as an enhancement, not a gap. No issues filed. Clean.
+<span class="label">post-merge review — what was found</span>
+Post-merge review verified criterion 1 (build error fixed ✓) and criterion 2 (duplicate declaration removed ✓). The pagination addition was a bonus — correctly noted as an enhancement, not a gap. No issues filed. Clean.
 </div>
 
 <div class="example">
@@ -921,15 +921,15 @@ PR delivered vcs interfaces, types, and most of the specified content. The code 
 </div>
 
 <div class="example">
-<span class="label">PR audit — what was found</span>
-Audit read acceptance criterion 3: "GetAllFilesInPath and BuildLineToPositionMap must be in vcs/util.go." Checked the diff. vcs/util.go does not exist. Filed issue #84: "vcs/util.go not delivered."
+<span class="label">post-merge review — what was found</span>
+Post-merge review read acceptance criterion 3: "GetAllFilesInPath and BuildLineToPositionMap must be in vcs/util.go." Checked the diff. vcs/util.go does not exist. Filed issue #84: "vcs/util.go not delivered."
 
 Also found: vcs.ContentEntry and vcs.GiteaClient should have been deleted per criterion 4. They weren't. Filed issue #85.
 
 Also found: 5 required interface methods missing from the vcs package. Filed issue #86.
 </div>
 
-*Three bugs, zero human reviewers involved. The PR was merged and "done" — the audit found the gaps.*
+*Three bugs, zero human reviewers involved. The PR was merged and "done" — the post-merge review found the gaps.*
 
 ---
 
@@ -937,11 +937,11 @@ Also found: 5 required interface methods missing from the vcs package. Filed iss
 
 Looking across 121 PRs and 18 months of autonomous operation:
 
-**The audit catches what review misses.**
-Review happens when code is fresh and the reviewer is primed by the PR description. Audit happens cold, against the issue — it's structurally harder to miss things the issue asked for.
+**The post-merge review catches what pre-merge review misses.**
+Review happens when code is fresh and the reviewer is primed by the PR description. Post-merge review happens cold, against the issue — it's structurally harder to miss things the issue asked for.
 
 **The loop amplifies quality over time.**
-Each audit-filed issue becomes a new issue that enters the dev loop. The loop fixes it. The audit checks the fix. Quality compounds.
+Each issue filed by the post-merge review enters the dev loop. The loop fixes it. The post-merge review checks the fix. Quality compounds.
 
 **Silence is the majority state.**
 Most loop runs return `NO_REPLY`. The system is healthy most of the time. When something shows up, it's real.
@@ -963,7 +963,7 @@ Not the reviewer, not the debugger, not the scheduler. Aaron merges approved PRs
 
 **Dev loop** — runs on a priority stack, self-corrects on failures, hands off only when clean.
 
-**PR audit** — verifies intent after merge, when it's hardest to rationalize gaps away.
+**post-merge review** — verifies intent after merge, when it's hardest to rationalize gaps away.
 
 **Triage** — keeps the board honest so the loops always have accurate state.
 

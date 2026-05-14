@@ -272,7 +272,7 @@ section.divider p {
     <div class="loop-arrow">→</div>
     <div class="loop-step">Review</div>
     <div class="loop-arrow">→</div>
-    <div class="loop-step">Audit</div>
+    <div class="loop-step">Post-Merge</div>
     <div class="loop-arrow">→</div>
     <div class="loop-step">Triage</div>
     <div class="loop-arrow">→</div>
@@ -802,7 +802,7 @@ section.divider p {
 </div>
 <div class="card">
 <h3 id="the-answer">The Answer</h3>
-<p>A self-correcting loop. Design documents anchor intent. A dev loop builds and reviews. A PR audit checks whether the issue was actually solved. Triage keeps the board clean. Each loop feeds the next.</p>
+<p>A self-correcting loop. Design documents anchor intent. A dev loop builds and reviews. A post-merge review checks whether the issue was actually solved. Triage keeps the board clean. Each loop feeds the next.</p>
 </div>
 </div>
 </section>
@@ -1067,7 +1067,7 @@ section.divider p {
 <p>This system is built on one conviction: <strong>quality is not a gate at the end — it's a property of the process.</strong></p>
 <ul class="principles" style="margin-top: 1em">
 <li><span class="pl-title">Slow is smooth, smooth is fast</span><br /><span class="pl-body">A design doc written up front saves five rebases later. Time spent orienting saves time spent correcting.</span></li>
-<li><span class="pl-title">Two is one and one is none</span><br /><span class="pl-body">Verify everything. One review catches some things. Three independent reviews catch most things. Audit after merge catches the rest.</span></li>
+<li><span class="pl-title">Two is one and one is none</span><br /><span class="pl-body">Verify everything. One review catches some things. Three independent reviews catch most things. Post-merge review catches the rest.</span></li>
 <li><span class="pl-title">Don't guess. Don't assume.</span><br /><span class="pl-body">Every decision is anchored to a document. Every review is anchored to a commit SHA. Ambiguity compounds into debt.</span></li>
 <li><span class="pl-title">The human's time is sacred</span><br /><span class="pl-body">Everything they see is finished, tested, reviewed, and clean. If it's not done, they don't see it. Assignment is the signal.</span></li>
 </ul>
@@ -1864,7 +1864,7 @@ section.divider p {
 </code></pre>
 <p><strong>What the plan locks in:</strong></p>
 <ul>
-<li>The exact acceptance criteria that will be verified at PR audit</li>
+<li>The exact acceptance criteria that will be verified at post-merge review</li>
 <li>The architectural approach — so review bots know <em>why</em> the code looks the way it does</li>
 <li>The test strategy — so CI failures have a clear diagnosis path</li>
 </ul>
@@ -2136,12 +2136,12 @@ Bot reviewers evaluate code against the design intent, not just style. <em>&quot
 <div>
 <p><strong>At self-review</strong><br />
 The pre-push self-review checks each acceptance criterion explicitly. A clean self-review requires all criteria accounted for.</p>
-<p><strong>At PR audit</strong><br />
+<p><strong>At post-merge review</strong><br />
 After merge, the post-merge skill reads the issue, finds the acceptance criteria, and verifies the PR delivered each one. Anything missed → a new bug issue.</p>
 </div>
 </div>
 <div class="rule"></div>
-<p><em>Remove the design document and the audit has nothing to verify against. The loop collapses into vibes.</em></p>
+<p><em>Remove the design document and the post-merge review has nothing to verify against. The loop collapses into vibes.</em></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-class="divider" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -3469,8 +3469,8 @@ section.divider p {
 }
 " lang="C" data-marpit-pagination="13" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="34">
-<h2 id="the-pr-audit-loop">The PR Audit Loop</h2>
-<p>After a PR merges, the dev loop's job is done — but the <strong>audit loop</strong> starts.</p>
+<h2 id="the-post-merge-review-loop">The Post-Merge Review Loop</h2>
+<p>After a PR merges, the dev loop's job is done — but the <strong>post-merge review loop</strong> starts.</p>
 <p><strong>The post-merge review runs hourly.</strong> It reads each merged PR, finds the linked issue, and checks:</p>
 <ol>
 <li>Were all acceptance criteria from the issue actually delivered?</li>
@@ -3479,12 +3479,12 @@ section.divider p {
 </ol>
 <p><strong>When it finds a gap:</strong></p>
 <div class="example">
-<span class="label">review-bot PR #117 — post-merge audit</span>
-PR #117 added <code>CommitID</code> to <code>vcs.ReviewRequest</code>. Audit found all 4 acceptance criteria satisfied. No issues created. Clean.
+<span class="label">review-bot PR #117 — post-merge review</span>
+PR #117 added <code>CommitID</code> to <code>vcs.ReviewRequest</code>. Post-merge review found all 4 acceptance criteria satisfied. No issues created. Clean.
 </div>
 <div class="example">
-<span class="label">gargoyle PR #771 — post-merge audit</span>
-PR #771 fixed <code>ingest_bars/2</code>. Audit found 3 of 4 criteria met — but criterion 2 ("chosen approach documented in design doc") was addressed only via inline comment, not in <code>docs/</code>. Issue #773 filed automatically.
+<span class="label">gargoyle PR #771 — post-merge review</span>
+PR #771 fixed <code>ingest_bars/2</code>. Post-merge review found 3 of 4 criteria met — but criterion 2 ("chosen approach documented in design doc") was addressed only via inline comment, not in <code>docs/</code>. Issue #773 filed automatically.
 </div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
@@ -4558,13 +4558,13 @@ section.divider p {
 <em>Produces:</em> code, review responses, self-review</p>
 </div>
 <div class="card">
-<h3 id="pr-audit">PR audit</h3>
+<h3 id="post-merge-review">post-merge review</h3>
 <p><em>Reads:</em> issue, design doc, merged PR diff<br />
 <em>Produces:</em> gap analysis, bug issues</p>
 </div>
 </div>
-<p><strong>The chain:</strong> Design doc → code → review → merge → audit. Remove any link and the chain breaks.</p>
-<blockquote>A PR audit without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
+<p><strong>The chain:</strong> Design doc → code → review → merge → post-merge review. Remove any link and the chain breaks.</p>
+<blockquote>A post-merge review without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -5095,7 +5095,7 @@ section.divider p {
 Read ~/.openclaw/workspace/skills/post-merge-review/SKILL.md
 and follow it exactly.
 Load project config from memory/projects/review-bot.yaml.
-If no new PRs were audited, respond with exactly NO_REPLY.
+If no new PRs were reviewed, respond with exactly NO_REPLY.
 </code></pre>
 <p><strong>The skill file contains the actual logic.</strong> Rules, step sequences, error handling, the <code>NO_REPLY</code> contract. This means:</p>
 <ul>
@@ -6178,7 +6178,7 @@ section.divider p {
 }
 " lang="C" data-marpit-pagination="23" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="34">
-<h2 id="pr-audit-loop-step-by-step">PR Audit Loop: Step by Step</h2>
+<h2 id="post-merge-review-loop-step-by-step">Post-Merge Review Loop: Step by Step</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Read project config + state file (lastReviewedMergedAt, reviewedPRs)
 2. Fetch recently merged PRs
 3. Filter: only PRs merged after lastReviewedMergedAt, not in reviewedPRs
@@ -6195,7 +6195,7 @@ For each new PR:
 10. If any missing/partial → open a bug issue on Gitea
 11. Update state file: add PR to reviewedPRs, update lastReviewedMergedAt
 </code></pre>
-<p><strong>The state file is the audit's memory.</strong> Without it, every run re-audits every PR. With it, the loop is incremental — only new merges.</p>
+<p><strong>The state file is the post-merge review's memory.</strong> Without it, every run re-reviews every PR. With it, the loop is incremental — only new merges.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -6451,20 +6451,20 @@ section.divider p {
 }
 " lang="C" data-marpit-pagination="24" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="34">
-<h2 id="pr-audit-loop-the-gap-pattern">PR Audit Loop: The Gap Pattern</h2>
+<h2 id="post-merge-review-loop-the-gap-pattern">Post-Merge Review Loop: The Gap Pattern</h2>
 <p>Most PRs have no gaps — the loop returns <code>NO_REPLY</code> in 20 seconds.</p>
-<p>When gaps exist, the audit files a precise bug issue:</p>
+<p>When gaps exist, the post-merge review files a precise bug issue:</p>
 <div class="example">
-<span class="label">review-bot issue #84 — auto-filed by audit</span>
+<span class="label">review-bot issue #84 — auto-filed by post-merge review</span>
 <strong>PR #83: vcs/util.go not delivered</strong><br />
 "Issue #82 acceptance criterion 3 required GetAllFilesInPath and BuildLineToPositionMap in the vcs package. These functions appear in review.go (the old location) but were not extracted to vcs/util.go as specified. The file vcs/util.go does not exist in the merged commit."
 </div>
 <div class="example">
-<span class="label">gargoyle issue #773 — auto-filed by audit</span>
+<span class="label">gargoyle issue #773 — auto-filed by post-merge review</span>
 <strong>PR #771: fail-safe approach not documented</strong><br />
 "Issue #763 acceptance criterion 2 requires the chosen approach to be documented in the design doc. The fail-safe logic is explained in inline code comments in ingest_bars.ex but is not recorded in any file under docs/. The acceptance criterion is not satisfied."
 </div>
-<p><em>These are bugs that human reviewers would never catch — because by the time the audit runs, the code is already merged and &quot;done.&quot;</em></p>
+<p><em>These are bugs that human reviewers would never catch — because by the time the post-merge review runs, the code is already merged and &quot;done.&quot;</em></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -7533,7 +7533,7 @@ section.divider p {
 <li>Issue triage and dependency labeling</li>
 <li>Pre-code design documents</li>
 <li>PR creation, review, self-review</li>
-<li>Post-merge gap audits</li>
+<li>Post-merge reviews</li>
 <li>Bot review experiments (Sonnet vs GPT-5 vs Opus)</li>
 </ul>
 </div>
@@ -7814,8 +7814,8 @@ Plan produced: add CommitID to vcs.ReviewRequest, thread through gitea.Adapter, 
 PR #117 created. gpt-review-bot flagged 2 findings. Worker fixed them, pushed. Bots re-reviewed, all APPROVED. Self-review spawned, passed. Ready label applied, assigned to Aaron.
 </div>
 <div class="example">
-<span class="label">Step 3 — PR audit</span>
-After merge: audit read issue #114, checked all 4 criteria against the merged diff. All satisfied — CommitID added, threaded through all layers, tests cover all new behaviors. No issues filed.
+<span class="label">Step 3 — post-merge review</span>
+After merge: post-merge review read issue #114, checked all 4 criteria against the merged diff. All satisfied — CommitID added, threaded through all layers, tests cover all new behaviors. No issues filed.
 </div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
@@ -8079,8 +8079,8 @@ section.divider p {
 review.go and identity.go deleted, consolidated into reviews.go. Build error fixed. But during implementation, the developer also added pagination to ListReviews — not in the original issue scope.
 </div>
 <div class="example">
-<span class="label">PR audit — what was found</span>
-Audit verified criterion 1 (build error fixed ✓) and criterion 2 (duplicate declaration removed ✓). The pagination addition was a bonus — correctly noted as an enhancement, not a gap. No issues filed. Clean.
+<span class="label">post-merge review — what was found</span>
+Post-merge review verified criterion 1 (build error fixed ✓) and criterion 2 (duplicate declaration removed ✓). The pagination addition was a bonus — correctly noted as an enhancement, not a gap. No issues filed. Clean.
 </div>
 <div class="example">
 <span class="label">Triage — what happened next</span>
@@ -8349,12 +8349,12 @@ section.divider p {
 PR delivered vcs interfaces, types, and most of the specified content. The code compiled. CI passed. Bot reviewers approved.
 </div>
 <div class="example">
-<span class="label">PR audit — what was found</span>
-Audit read acceptance criterion 3: "GetAllFilesInPath and BuildLineToPositionMap must be in vcs/util.go." Checked the diff. vcs/util.go does not exist. Filed issue #84: "vcs/util.go not delivered."
+<span class="label">post-merge review — what was found</span>
+Post-merge review read acceptance criterion 3: "GetAllFilesInPath and BuildLineToPositionMap must be in vcs/util.go." Checked the diff. vcs/util.go does not exist. Filed issue #84: "vcs/util.go not delivered."
 <p>Also found: vcs.ContentEntry and vcs.GiteaClient should have been deleted per criterion 4. They weren't. Filed issue #85.</p>
 <p>Also found: 5 required interface methods missing from the vcs package. Filed issue #86.</p>
 </div>
-<p><em>Three bugs, zero human reviewers involved. The PR was merged and &quot;done&quot; — the audit found the gaps.</em></p>
+<p><em>Three bugs, zero human reviewers involved. The PR was merged and &quot;done&quot; — the post-merge review found the gaps.</em></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -8612,10 +8612,10 @@ section.divider p {
 ;" data-marpit-pagination-total="34">
 <h2 id="the-pattern-that-emerges">The Pattern That Emerges</h2>
 <p>Looking across 121 PRs and 18 months of autonomous operation:</p>
-<p><strong>The audit catches what review misses.</strong><br />
-Review happens when code is fresh and the reviewer is primed by the PR description. Audit happens cold, against the issue — it's structurally harder to miss things the issue asked for.</p>
+<p><strong>The post-merge review catches what pre-merge review misses.</strong><br />
+Review happens when code is fresh and the reviewer is primed by the PR description. Post-merge review happens cold, against the issue — it's structurally harder to miss things the issue asked for.</p>
 <p><strong>The loop amplifies quality over time.</strong><br />
-Each audit-filed issue becomes a new issue that enters the dev loop. The loop fixes it. The audit checks the fix. Quality compounds.</p>
+Each issue filed by the post-merge review enters the dev loop. The loop fixes it. The post-merge review checks the fix. Quality compounds.</p>
 <p><strong>Silence is the majority state.</strong><br />
 Most loop runs return <code>NO_REPLY</code>. The system is healthy most of the time. When something shows up, it's real.</p>
 <p><strong>The human becomes the merge gate.</strong><br />
@@ -8880,7 +8880,7 @@ section.divider p {
 <div style="text-align: left; max-width: 640px; margin: 1.5em auto 0">
 <p><strong>Design first</strong> — acceptance criteria become the contract every downstream loop checks against.</p>
 <p><strong>Dev loop</strong> — runs on a priority stack, self-corrects on failures, hands off only when clean.</p>
-<p><strong>PR audit</strong> — verifies intent after merge, when it's hardest to rationalize gaps away.</p>
+<p><strong>post-merge review</strong> — verifies intent after merge, when it's hardest to rationalize gaps away.</p>
 <p><strong>Triage</strong> — keeps the board honest so the loops always have accurate state.</p>
 <p><strong>Docs</strong> — the only continuity an AI has between sessions. Remove them and the loops go blind.</p>
 <p><strong>NO_REPLY</strong> — the sound of a healthy system. Signal means something real happened.</p>
