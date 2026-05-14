@@ -649,6 +649,68 @@ If no new PRs were reviewed, respond with exactly NO_REPLY.
 
 ---
 
+## Review Personas: Narrow Questions Beat Broad Mandates
+
+"Review this code for quality" is not a useful prompt. It spreads attention thin and produces generic feedback. **A persona is a reviewer with a specific job, a specific lens, and a specific patterns library.**
+
+review-bot runs four personas against every PR:
+
+<div class="cols">
+<div class="card">
+
+### security-reviewer
+Looks for input validation, auth boundaries, injection paths, secrets exposure. Every finding framed as: *what's the attack surface?*
+
+### elixir-otp-reviewer
+Looks for OTP anti-patterns: blocking GenServers, wrong supervision strategy, misused `Process.sleep`, race conditions in message ordering.
+
+</div>
+<div class="card">
+
+### trading-domain-reviewer
+Looks for domain correctness: fill price rounding, order state machine violations, deduplication gaps, event ordering assumptions.
+
+### gpt-review-bot
+Breadth scan: gap-finding, compound failure chains, missing error paths. Runs on GPT-5 — excels at "what did this PR forget to handle?"
+
+</div>
+</div>
+
+*Each persona finds things the others miss. The union of four narrow reviews catches more than one broad review ever could.*
+
+---
+
+## Pattern Repos: Encoding Reviewer Expertise
+
+A persona without reference material is just a prompt. **Pattern repos are what give personas teeth.**
+
+Each repo captures real-world examples of correct and incorrect patterns — with file:line citations into production codebases:
+
+<div class="cols">
+<div>
+
+**rodin/elixir-patterns**
+Sourced from `elixir-lang/elixir` and `phoenixframework/phoenix`. Covers OTP process isolation, supervision trees, GenServer boundaries, telemetry conventions.
+
+**rodin/go-patterns**
+Sourced from `golang/go` and `kubernetes/kubernetes`. Covers error wrapping, context propagation, interface design, allowlist validation.
+
+</div>
+<div>
+
+**rodin/security-patterns**
+Attack surface taxonomy. Input validation approaches. Auth boundary patterns. What "safe" looks like at each layer.
+
+**rodin/trading-patterns** *(domain-specific)*
+Fill price arithmetic, order state machine transitions, deduplication strategies. Built from gargoyle's own production code.
+
+</div>
+</div>
+
+<blockquote>Patterns repos are audited weekly — citations are verified against upstream source. A stale pattern is worse than no pattern: it trains the reviewer to accept outdated idioms.</blockquote>
+
+---
+
 <!-- _class: divider -->
 
 # Part IV
