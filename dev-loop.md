@@ -535,7 +535,7 @@ Criterion 2 ("document chosen approach in design doc") not met — only an inlin
 The triage loop runs every 30 minutes. Its job is **observation, not execution.**
 
 **What it does:**
-- **Checks issue quality:** does every open issue have a problem statement and acceptance criteria? If not, adds `needs-detail` label — the dev loop will not pick up a thin issue
+- **Evaluates issues against domain docs:** reads design docs and domain knowledge to check whether each issue is correctly and fully specified. If docs resolve ambiguity, requirements are filled in. If the issue conflicts with established behaviour, or docs don't resolve it, adds `needs-detail` and flags for human — the dev loop will not pick up an unresolved issue
 - Syncs dependency labels: if a blocking issue closes, remove `blocked` from downstream issues
 - Flags oversized issues: `size:L` or `size:XL` without `needs-split` → add the label
 - Checks PR state: are PRs that are fully reviewed and approved correctly labeled?
@@ -545,8 +545,8 @@ The triage loop runs every 30 minutes. Its job is **observation, not execution.*
 - Trigger the dev loop (they run independently on their own schedules)
 - Fix anything — it observes, labels, and reports
 
-**Why issue quality checking belongs here:**  
-The dev loop's pre-code step needs acceptance criteria to produce a valid design doc. An issue without them produces a design doc full of assumptions — and the post-merge review will file bugs when reality diverges. Catching thin issues at triage breaks the cycle before it starts.
+**Why this belongs in triage:**  
+Triage is the only loop with enough context to evaluate intent against the system's documented behaviour. The dev loop is an executor — it shouldn't be resolving ambiguity, it should be implementing clarity. If something is ambiguous, the human decides before any code is written.
 
 <blockquote>Triage is the immune system. It doesn't build anything — it keeps the board honest so every downstream loop always has accurate, complete state to work from.</blockquote>
 
@@ -864,11 +864,15 @@ When gaps exist, the post-merge review files a precise bug issue:
 ## Triage Loop: Step by Step
 
 ```
-1. Read project config
+1. Read project config + domain docs (design docs, CLAUDE.md, validation template)
 2. Fetch all open issues (excluding blocked/needs-split/needs-detail)
-3. For each issue — check quality:
-   → Body empty or missing problem statement: add needs-detail label
-   → No acceptance criteria or definition of done: add needs-detail label
+3. For each issue — evaluate against domain docs:
+   → Body empty or missing problem statement: add needs-detail
+   → Has content but conflicts with domain docs or regulations: add needs-detail,
+     comment with the specific conflict
+   → Ambiguous — docs don’t resolve how it should work: add needs-detail,
+     flag for human decision
+   → Requirements clear and consistent with docs: proceed
    (dev loop will not pick up a needs-detail issue)
 4. Fetch all open issues with blocked label
 5. For each blocked issue:
@@ -885,7 +889,7 @@ When gaps exist, the post-merge review files a precise bug issue:
     Something changed → deliver notification
 ```
 
-**Step 3 is the quality gate.** A thin issue that reaches the dev loop produces a design doc full of assumptions. Those assumptions become bugs the post-merge review has to file. Catching them here is cheaper.
+**Step 3 uses the docs as the authority.** The domain docs define how the system must behave. Triage checks each issue against that knowledge — if the docs resolve it, requirements are filled in; if they don’t, a human decides. The dev loop never sees an ambiguous issue.
 
 ---
 
