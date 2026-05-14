@@ -927,7 +927,7 @@ Delivered to the configured channel. Contains a summary of what changed.
 
 ## The Story: review-bot
 
-review-bot is a Go service that reviews PRs on Gitea using AI. It was built almost entirely autonomously — 56 merged PRs, dozens of issues, with Rodin doing the full development loop.
+review-bot is a Go service that reviews PRs on Gitea using AI. It was built almost entirely autonomously — 56 merged PRs across review-bot, 380 across gargoyle, with Rodin doing the full development loop on both.
 
 **The challenge:** Go code requires operational awareness that AI often misses — org conventions, security instincts, system boundaries. A naive AI generates code that compiles and fails silently.
 
@@ -1027,7 +1027,7 @@ Also found: 5 required interface methods missing from the vcs package. Filed iss
 
 ## The Pattern That Emerges
 
-Looking across 56 merged PRs and 3 weeks of autonomous operation:
+Looking across 436 merged PRs (380 gargoyle + 56 review-bot) in 3 weeks of autonomous operation:
 
 **The post-merge review catches what pre-merge review misses.**
 Review happens when code is fresh and the reviewer is primed by the PR description. Post-merge review happens cold, against the issue — it's structurally harder to miss things the issue asked for.
