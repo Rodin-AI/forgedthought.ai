@@ -727,7 +727,11 @@ Fill price arithmetic, order state machine transitions, deduplication strategies
 3. If no open PRs:
    → Get open issues (unassigned or assigned to rodin, no active PR)
    → If none: NO_REPLY
-   → If issues exist: spawn dev worker to pick one up (pre-code first)
+   → If issues exist: spawn dev worker:
+        - Run pre-code skill → write design doc, get criteria
+        - Implement in a git worktree on a new branch
+        - Push branch, open PR against main
+        - Apply wip label, assign to rodin
 4. If active worker (wip label, updated < 5 min ago) → NO_REPLY
 
 For the active PR:
@@ -746,7 +750,7 @@ For the active PR:
    → Deliver Telegram notification
 ```
 
-**Step 3 is how new work enters the loop.** Without it, the loop can only maintain in-flight PRs — it never picks up anything new. The SHA check at steps 5–7 is equally critical: old reviews against old commits don't count.
+**Step 3 is how new work enters the loop.** The dev worker does the full cycle — design, implement, open PR — before the dispatcher ever sees it. Steps 4–8 then drive that PR to completion.
 
 ---
 

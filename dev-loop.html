@@ -6170,7 +6170,11 @@ section.divider p {
 3. If no open PRs:
    → Get open issues (unassigned or assigned to rodin, no active PR)
    → If none: NO_REPLY
-   → If issues exist: spawn dev worker to pick one up (pre-code first)
+   → If issues exist: spawn dev worker:
+        - Run pre-code skill → write design doc, get criteria
+        - Implement in a git worktree on a new branch
+        - Push branch, open PR against main
+        - Apply wip label, assign to rodin
 4. If active worker (wip label, updated &lt; 5 min ago) → NO_REPLY
 
 For the active PR:
@@ -6188,7 +6192,7 @@ For the active PR:
    → Assign to human
    → Deliver Telegram notification
 </code></pre>
-<p><strong>Step 3 is how new work enters the loop.</strong> Without it, the loop can only maintain in-flight PRs — it never picks up anything new. The SHA check at steps 5–7 is equally critical: old reviews against old commits don't count.</p>
+<p><strong>Step 3 is how new work enters the loop.</strong> The dev worker does the full cycle — design, implement, open PR — before the dispatcher ever sees it. Steps 4–8 then drive that PR to completion.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
