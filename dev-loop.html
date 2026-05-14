@@ -5653,24 +5653,24 @@ section.divider p {
 }
 " lang="C" data-marpit-pagination="21" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="36">
-<h2 id="pattern-repos-encoding-reviewer-expertise">Pattern Repos: Encoding Reviewer Expertise</h2>
-<p>A persona without reference material is just a prompt. <strong>Pattern repos are what give personas teeth.</strong></p>
-<p>Each repo captures real-world examples of correct and incorrect patterns — with file:line citations into production codebases:</p>
+<h2 id="pattern-repos-grounding-the-model">Pattern Repos: Grounding the Model</h2>
+<p>LLMs are trained on the whole internet — including every bad Stack Overflow answer, every cargo-culted snippet, every &quot;this works but nobody knows why&quot; pattern. Without something to anchor against, a model confidently generates the <em>most common</em> pattern, which is often not the <em>correct</em> one.</p>
+<p><strong>Pattern repos solve this by grounding the reviewer in authoritative source.</strong> Not what the internet does — what the actual stdlib, framework, or domain does. Citations point to specific lines in production codebases that have been read, tested, and maintained by experts.</p>
 <div class="cols">
 <div>
 <p><strong>rodin/elixir-patterns</strong><br />
-Sourced from <code>elixir-lang/elixir</code> and <code>phoenixframework/phoenix</code>. Covers OTP process isolation, supervision trees, GenServer boundaries, telemetry conventions.</p>
+Sourced from <code>elixir-lang/elixir</code> and <code>phoenixframework/phoenix</code>. The reviewer knows what correct OTP looks like because it's reading the OTP source, not a tutorial.</p>
 <p><strong>rodin/go-patterns</strong><br />
-Sourced from <code>golang/go</code> and <code>kubernetes/kubernetes</code>. Covers error wrapping, context propagation, interface design, allowlist validation.</p>
+Sourced from <code>golang/go</code> and <code>kubernetes/kubernetes</code>. Error wrapping, context propagation, interface design — from the engineers who wrote the language.</p>
 </div>
 <div>
 <p><strong>rodin/security-patterns</strong><br />
-Attack surface taxonomy. Input validation approaches. Auth boundary patterns. What &quot;safe&quot; looks like at each layer.</p>
-<p><strong>rodin/trading-patterns</strong> <em>(domain-specific)</em><br />
-Fill price arithmetic, order state machine transitions, deduplication strategies. Built from gargoyle's own production code.</p>
+Not &quot;here's what secure code looks like&quot; generically — specific attack surfaces, specific mitigations, anchored to real examples.</p>
+<p><strong>rodin/trading-patterns</strong><br />
+Built from gargoyle's own production code. The domain reviewer isn't guessing at trading semantics — it's reading the system's own established patterns.</p>
 </div>
 </div>
-<blockquote>Patterns repos are audited weekly — citations are verified against upstream source. A stale pattern is worse than no pattern: it trains the reviewer to accept outdated idioms.</blockquote>
+<blockquote>The model isn't smarter with pattern repos. It's better constrained. That's more valuable than smarter.</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-class="divider" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 

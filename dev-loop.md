@@ -706,34 +706,34 @@ Personas are configured per project. review-bot has 3; gargoyle has 4:
 
 ---
 
-## Pattern Repos: Encoding Reviewer Expertise
+## Pattern Repos: Grounding the Model
 
-A persona without reference material is just a prompt. **Pattern repos are what give personas teeth.**
+LLMs are trained on the whole internet — including every bad Stack Overflow answer, every cargo-culted snippet, every "this works but nobody knows why" pattern. Without something to anchor against, a model confidently generates the *most common* pattern, which is often not the *correct* one.
 
-Each repo captures real-world examples of correct and incorrect patterns — with file:line citations into production codebases:
+**Pattern repos solve this by grounding the reviewer in authoritative source.** Not what the internet does — what the actual stdlib, framework, or domain does. Citations point to specific lines in production codebases that have been read, tested, and maintained by experts.
 
 <div class="cols">
 <div>
 
 **rodin/elixir-patterns**
-Sourced from `elixir-lang/elixir` and `phoenixframework/phoenix`. Covers OTP process isolation, supervision trees, GenServer boundaries, telemetry conventions.
+Sourced from `elixir-lang/elixir` and `phoenixframework/phoenix`. The reviewer knows what correct OTP looks like because it's reading the OTP source, not a tutorial.
 
 **rodin/go-patterns**
-Sourced from `golang/go` and `kubernetes/kubernetes`. Covers error wrapping, context propagation, interface design, allowlist validation.
+Sourced from `golang/go` and `kubernetes/kubernetes`. Error wrapping, context propagation, interface design — from the engineers who wrote the language.
 
 </div>
 <div>
 
 **rodin/security-patterns**
-Attack surface taxonomy. Input validation approaches. Auth boundary patterns. What "safe" looks like at each layer.
+Not "here's what secure code looks like" generically — specific attack surfaces, specific mitigations, anchored to real examples.
 
-**rodin/trading-patterns** *(domain-specific)*
-Fill price arithmetic, order state machine transitions, deduplication strategies. Built from gargoyle's own production code.
+**rodin/trading-patterns**
+Built from gargoyle's own production code. The domain reviewer isn't guessing at trading semantics — it's reading the system's own established patterns.
 
 </div>
 </div>
 
-<blockquote>Patterns repos are audited weekly — citations are verified against upstream source. A stale pattern is worse than no pattern: it trains the reviewer to accept outdated idioms.</blockquote>
+<blockquote>The model isn't smarter with pattern repos. It's better constrained. That's more valuable than smarter.</blockquote>
 
 ---
 
