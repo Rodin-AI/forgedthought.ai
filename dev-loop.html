@@ -5381,22 +5381,23 @@ section.divider p {
 ;" data-marpit-pagination-total="36">
 <h2 id="review-personas-narrow-questions-beat-broad-mandates">Review Personas: Narrow Questions Beat Broad Mandates</h2>
 <p>&quot;Review this code for quality&quot; is not a useful prompt. It spreads attention thin and produces generic feedback. <strong>A persona is a reviewer with a specific job, a specific lens, and a specific patterns library.</strong></p>
-<p>review-bot runs four personas against every PR:</p>
+<p>Personas are configured per project. review-bot has 3; gargoyle has 4:</p>
 <div class="cols">
 <div class="card">
-<h3 id="security-reviewer">security-reviewer</h3>
-<p>Looks for input validation, auth boundaries, injection paths, secrets exposure. Every finding framed as: <em>what's the attack surface?</em></p>
-<h3 id="elixir-otp-reviewer">elixir-otp-reviewer</h3>
-<p>Looks for OTP anti-patterns: blocking GenServers, wrong supervision strategy, misused <code>Process.sleep</code>, race conditions in message ordering.</p>
+<h3 id="review-bot-3-reviewers">review-bot (3 reviewers)</h3>
+<p><strong>sonnet</strong> — structural scan, API design, error handling</p>
+<p><strong>gpt</strong> — breadth scan, gap-finding, compound failure chains</p>
+<p><strong>security</strong> — input validation, auth boundaries, injection paths</p>
 </div>
 <div class="card">
-<h3 id="trading-domain-reviewer">trading-domain-reviewer</h3>
-<p>Looks for domain correctness: fill price rounding, order state machine violations, deduplication gaps, event ordering assumptions.</p>
-<h3 id="gpt-review-bot">gpt-review-bot</h3>
-<p>Breadth scan: gap-finding, compound failure chains, missing error paths. Runs on GPT-5 — excels at &quot;what did this PR forget to handle?&quot;</p>
+<h3 id="gargoyle-4-reviewers">gargoyle (4 reviewers)</h3>
+<p><strong>elixir-otp</strong> — OTP anti-patterns, supervision strategy, process isolation</p>
+<p><strong>event-sourcing</strong> — event ordering, replay correctness, aggregate boundaries</p>
+<p><strong>security</strong> — same lens, different codebase context</p>
+<p><strong>trading-domain</strong> — fill price arithmetic, order state machine, deduplication</p>
 </div>
 </div>
-<p><em>Each persona finds things the others miss. The union of four narrow reviews catches more than one broad review ever could.</em></p>
+<p><em>The persona set is tailored to the project's risk surface. A Go service needs different eyes than an Elixir trading system.</em></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 

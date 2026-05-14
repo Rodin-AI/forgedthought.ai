@@ -675,30 +675,34 @@ If no new PRs were reviewed, respond with exactly NO_REPLY.
 
 "Review this code for quality" is not a useful prompt. It spreads attention thin and produces generic feedback. **A persona is a reviewer with a specific job, a specific lens, and a specific patterns library.**
 
-review-bot runs four personas against every PR:
+Personas are configured per project. review-bot has 3; gargoyle has 4:
 
 <div class="cols">
 <div class="card">
 
-### security-reviewer
-Looks for input validation, auth boundaries, injection paths, secrets exposure. Every finding framed as: *what's the attack surface?*
+### review-bot (3 reviewers)
+**sonnet** — structural scan, API design, error handling
 
-### elixir-otp-reviewer
-Looks for OTP anti-patterns: blocking GenServers, wrong supervision strategy, misused `Process.sleep`, race conditions in message ordering.
+**gpt** — breadth scan, gap-finding, compound failure chains
+
+**security** — input validation, auth boundaries, injection paths
 
 </div>
 <div class="card">
 
-### trading-domain-reviewer
-Looks for domain correctness: fill price rounding, order state machine violations, deduplication gaps, event ordering assumptions.
+### gargoyle (4 reviewers)
+**elixir-otp** — OTP anti-patterns, supervision strategy, process isolation
 
-### gpt-review-bot
-Breadth scan: gap-finding, compound failure chains, missing error paths. Runs on GPT-5 — excels at "what did this PR forget to handle?"
+**event-sourcing** — event ordering, replay correctness, aggregate boundaries
+
+**security** — same lens, different codebase context
+
+**trading-domain** — fill price arithmetic, order state machine, deduplication
 
 </div>
 </div>
 
-*Each persona finds things the others miss. The union of four narrow reviews catches more than one broad review ever could.*
+*The persona set is tailored to the project's risk surface. A Go service needs different eyes than an Elixir trading system.*
 
 ---
 
