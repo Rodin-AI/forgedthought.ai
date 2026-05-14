@@ -421,9 +421,9 @@ After merge, the post-merge skill reads the issue, finds the acceptance criteria
 
 ## The Dev Loop: Overview
 
-The loop runs on a schedule. Every 10 minutes, it checks one open PR and decides what to do next. No ambiguity. One rule set. One action per run.
+The loop runs on a schedule. Every 10 minutes, it checks state and takes exactly one action. No ambiguity. One rule set. One action per run.
 
-<div class="loop" style="font-size: 1rem; margin: 1.5em 0">
+<div class="loop" style="font-size: 1rem; margin: 1.2em 0">
   <div class="loop-step">Open PR?</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">Active worker?</div>
@@ -441,13 +441,14 @@ The loop runs on a schedule. Every 10 minutes, it checks one open PR and decides
 
 **The rules are a priority stack, not a checklist:**
 
+0. **No open PR** → check for open issues ready to work → spawn a dev worker to pick one up
 1. If an active worker is running → stop, don't interfere
 2. If CI is failing → spawn a fix worker
 3. If reviews have unaddressed findings → spawn a fix worker
 4. If self-review is missing → spawn a self-review worker
 5. If everything is clean → apply `ready`, assign to human
 
-*Every condition has exactly one correct response. The loop never has to decide.*
+*Step 0 is how new work enters. Without it, the loop only maintains in-flight PRs — it never picks up anything new.*
 
 ---
 
@@ -661,7 +662,10 @@ If no new PRs were audited, respond with exactly NO_REPLY.
 ```
 1. Read project config
 2. Get all open PRs from rodin (the AI author)
-3. If no open PRs → NO_REPLY
+3. If no open PRs:
+   → Get open issues (unassigned or assigned to rodin, no active PR)
+   → If none: NO_REPLY
+   → If issues exist: spawn dev worker to pick one up (pre-code first)
 4. If active worker (wip label, updated < 5 min ago) → NO_REPLY
 
 For the active PR:
@@ -680,7 +684,7 @@ For the active PR:
    → Deliver Telegram notification
 ```
 
-**The SHA check at steps 5–7 is critical.** Old reviews against old commits don't count. The loop always anchors to current HEAD.
+**Step 3 is how new work enters the loop.** Without it, the loop can only maintain in-flight PRs — it never picks up anything new. The SHA check at steps 5–7 is equally critical: old reviews against old commits don't count.
 
 ---
 

@@ -2655,8 +2655,8 @@ section.divider p {
 " lang="C" data-marpit-pagination="10" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="34">
 <h2 id="the-dev-loop-overview">The Dev Loop: Overview</h2>
-<p>The loop runs on a schedule. Every 10 minutes, it checks one open PR and decides what to do next. No ambiguity. One rule set. One action per run.</p>
-<div class="loop" style="font-size: 1rem; margin: 1.5em 0">
+<p>The loop runs on a schedule. Every 10 minutes, it checks state and takes exactly one action. No ambiguity. One rule set. One action per run.</p>
+<div class="loop" style="font-size: 1rem; margin: 1.2em 0">
   <div class="loop-step">Open PR?</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">Active worker?</div>
@@ -2672,14 +2672,15 @@ section.divider p {
   <div class="loop-step">Hand off</div>
 </div>
 <p><strong>The rules are a priority stack, not a checklist:</strong></p>
-<ol>
+<ol start="0">
+<li><strong>No open PR</strong> → check for open issues ready to work → spawn a dev worker to pick one up</li>
 <li>If an active worker is running → stop, don't interfere</li>
 <li>If CI is failing → spawn a fix worker</li>
 <li>If reviews have unaddressed findings → spawn a fix worker</li>
 <li>If self-review is missing → spawn a self-review worker</li>
 <li>If everything is clean → apply <code>ready</code>, assign to human</li>
 </ol>
-<p><em>Every condition has exactly one correct response. The loop never has to decide.</em></p>
+<p><em>Step 0 is how new work enters. Without it, the loop only maintains in-flight PRs — it never picks up anything new.</em></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
@@ -5618,7 +5619,10 @@ section.divider p {
 <h2 id="dev-loop-step-by-step">Dev Loop: Step by Step</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Read project config
 2. Get all open PRs from rodin (the AI author)
-3. If no open PRs → NO_REPLY
+3. If no open PRs:
+   → Get open issues (unassigned or assigned to rodin, no active PR)
+   → If none: NO_REPLY
+   → If issues exist: spawn dev worker to pick one up (pre-code first)
 4. If active worker (wip label, updated &lt; 5 min ago) → NO_REPLY
 
 For the active PR:
@@ -5636,7 +5640,7 @@ For the active PR:
    → Assign to human
    → Deliver Telegram notification
 </code></pre>
-<p><strong>The SHA check at steps 5–7 is critical.</strong> Old reviews against old commits don't count. The loop always anchors to current HEAD.</p>
+<p><strong>Step 3 is how new work enters the loop.</strong> Without it, the loop can only maintain in-flight PRs — it never picks up anything new. The SHA check at steps 5–7 is equally critical: old reviews against old commits don't count.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
