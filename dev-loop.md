@@ -594,35 +594,36 @@ Tied to the implementation. Updated when the approach changes. Example: "Using `
 
 ## Docs as Loop Fuel
 
-Each loop reads a different kind of document and produces a different kind of output:
+Every loop reads the same documents. What shifts is the *perspective* — the question being asked of them.
 
 <div class="cols-3">
 <div class="card">
 
 ### Pre-code
-*Reads:* issue body, codebase  
-*Produces:* design doc with acceptance criteria
+*Perspective:* What do I need to build?
+
+Issue + codebase + domain docs → produces the design doc and acceptance criteria that anchor everything downstream.
 
 </div>
 <div class="card">
 
 ### Dev loop
-*Reads:* design doc, PR diff, review comments  
-*Produces:* code, review responses, self-review
+*Perspective:* Is this implementation correct?
+
+Same docs + PR diff + review comments → evaluates whether the code matches the intent, not just whether it compiles.
 
 </div>
 <div class="card">
 
-### post-merge review
-*Reads:* issue, design doc, merged PR diff  
-*Produces:* gap analysis, bug issues
+### Post-merge review
+*Perspective:* Did this deliver what was promised?
+
+Same docs + merged diff → checks reality against the original acceptance criteria, cold, after the fact.
 
 </div>
 </div>
 
-**The chain:** Design doc → code → review → merge → post-merge review. Remove any link and the chain breaks.
-
-<blockquote>A post-merge review without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
+<blockquote>The docs don't change. The question does. That's what makes each loop see something different in the same material.</blockquote>
 
 ---
 

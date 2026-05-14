@@ -4566,26 +4566,25 @@ section.divider p {
 " lang="C" data-marpit-pagination="17" style="--paginate:true;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap')
 ;" data-marpit-pagination-total="36">
 <h2 id="docs-as-loop-fuel">Docs as Loop Fuel</h2>
-<p>Each loop reads a different kind of document and produces a different kind of output:</p>
+<p>Every loop reads the same documents. What shifts is the <em>perspective</em> — the question being asked of them.</p>
 <div class="cols-3">
 <div class="card">
 <h3 id="pre-code">Pre-code</h3>
-<p><em>Reads:</em> issue body, codebase<br />
-<em>Produces:</em> design doc with acceptance criteria</p>
+<p><em>Perspective:</em> What do I need to build?</p>
+<p>Issue + codebase + domain docs → produces the design doc and acceptance criteria that anchor everything downstream.</p>
 </div>
 <div class="card">
 <h3 id="dev-loop">Dev loop</h3>
-<p><em>Reads:</em> design doc, PR diff, review comments<br />
-<em>Produces:</em> code, review responses, self-review</p>
+<p><em>Perspective:</em> Is this implementation correct?</p>
+<p>Same docs + PR diff + review comments → evaluates whether the code matches the intent, not just whether it compiles.</p>
 </div>
 <div class="card">
-<h3 id="post-merge-review">post-merge review</h3>
-<p><em>Reads:</em> issue, design doc, merged PR diff<br />
-<em>Produces:</em> gap analysis, bug issues</p>
+<h3 id="post-merge-review">Post-merge review</h3>
+<p><em>Perspective:</em> Did this deliver what was promised?</p>
+<p>Same docs + merged diff → checks reality against the original acceptance criteria, cold, after the fact.</p>
 </div>
 </div>
-<p><strong>The chain:</strong> Design doc → code → review → merge → post-merge review. Remove any link and the chain breaks.</p>
-<blockquote>A post-merge review without a design doc can only check that the code is correct — not that it solved the right problem. The design doc is what turns "code review" into "intent verification."</blockquote>
+<blockquote>The docs don't change. The question does. That's what makes each loop see something different in the same material.</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;display=swap');
 
