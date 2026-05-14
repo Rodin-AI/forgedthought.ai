@@ -550,6 +550,8 @@ Triage is the only loop with enough context to evaluate intent against the syste
 
 <blockquote>Triage is the immune system. It doesn't build anything — it keeps the board honest so every downstream loop always has accurate, complete state to work from.</blockquote>
 
+*Evaluating issues against domain docs and regulations requires genuine reasoning — triage runs on Opus with high thinking, not a fast model.*
+
 ---
 
 <!-- _class: divider -->
