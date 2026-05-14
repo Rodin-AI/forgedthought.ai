@@ -556,7 +556,7 @@ Without docs, every loop run has to re-derive context from the codebase. With do
 ### Domain docs
 *What the system is and why it works the way it does.*
 
-Survives rewrites. Stable. Example: "The OrderManager is a GenServer that owns placement, tracking, and deduplication of orders."
+Survives rewrites. Stable. Example: "The OrderManager owns placement, tracking, and deduplication of orders. An order exists from intent to fill — the manager is the authority on its state."
 
 </div>
 <div class="card">
