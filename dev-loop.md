@@ -499,16 +499,16 @@ After a PR merges, the dev loop's job is done — but the **post-merge review lo
 2. Did the implementation match the approach in the design?
 3. Are there any gaps that would cause silent failures later?
 
-**When it finds a gap:**
+**When it finds a gap → it files a new bug issue on Gitea.** The issue includes:
+- Which acceptance criterion was missed
+- What was delivered vs. what was required
+- A link back to the original issue and PR
 
-<div class="example">
-<span class="label">review-bot PR #117 — post-merge review</span>
-PR #117 added <code>CommitID</code> to <code>vcs.ReviewRequest</code>. Post-merge review found all 4 acceptance criteria satisfied. No issues created. Clean.
-</div>
+That bug issue then enters the normal issue backlog. The dev loop picks it up on the next cycle — pre-code, implement, review, post-merge review. **The gap closes itself.**
 
 <div class="example">
 <span class="label">gargoyle PR #771 — post-merge review</span>
-PR #771 fixed <code>ingest_bars/2</code>. Post-merge review found 3 of 4 criteria met — but criterion 2 ("chosen approach documented in design doc") was addressed only via inline comment, not in <code>docs/</code>. Issue #773 filed automatically.
+Criterion 2 ("document chosen approach in design doc") not met — only an inline comment, nothing in <code>docs/</code>. → Filed issue #773. Dev loop picked it up. PR #774 delivered the doc. Post-merge review confirmed all criteria satisfied.
 </div>
 
 ---
