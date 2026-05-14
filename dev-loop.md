@@ -425,23 +425,33 @@ The loop runs on a schedule. Every 10 minutes, it checks state and takes exactly
 
 <div class="loop" style="font-size: 1rem; margin: 1.2em 0">
   <div class="loop-step">Open PR?</div>
+  <div class="loop-arrow">→ no →</div>
+  <div class="loop-step">Open issues?</div>
+  <div class="loop-arrow">→ yes →</div>
+  <div class="loop-step">Spawn dev worker</div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-step">PR created</div>
+</div>
+
+<div class="loop" style="font-size: 1rem; margin: 0.6em 0">
+  <div class="loop-step">PR open</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">Active worker?</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">CI green?</div>
   <div class="loop-arrow">→</div>
-  <div class="loop-step">Reviews complete?</div>
+  <div class="loop-step">Reviews done?</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">Findings addressed?</div>
   <div class="loop-arrow">→</div>
-  <div class="loop-step">Self-review done?</div>
+  <div class="loop-step">Self-review?</div>
   <div class="loop-arrow">→</div>
   <div class="loop-step">Hand off</div>
 </div>
 
 **The rules are a priority stack, not a checklist:**
 
-0. **No open PR** → check for open issues ready to work → spawn a dev worker to pick one up
+0. **No open PR** → check for open issues → spawn dev worker (pre-code → implement → open PR)
 1. If an active worker is running → stop, don't interfere
 2. If CI is failing → spawn a fix worker
 3. If reviews have unaddressed findings → spawn a fix worker
