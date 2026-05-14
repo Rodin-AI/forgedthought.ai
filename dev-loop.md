@@ -1027,7 +1027,7 @@ Also found: 5 required interface methods missing from the vcs package. Filed iss
 
 ## The Pattern That Emerges
 
-Looking across 121 PRs and 18 months of autonomous operation:
+Looking across 121 PRs and 3 weeks of autonomous operation:
 
 **The post-merge review catches what pre-merge review misses.**
 Review happens when code is fresh and the reviewer is primed by the PR description. Post-merge review happens cold, against the issue — it's structurally harder to miss things the issue asked for.
