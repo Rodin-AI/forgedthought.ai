@@ -535,6 +535,7 @@ Criterion 2 ("document chosen approach in design doc") not met — only an inlin
 The triage loop runs every 30 minutes. Its job is **observation, not execution.**
 
 **What it does:**
+- **Checks issue quality:** does every open issue have a problem statement and acceptance criteria? If not, adds `needs-detail` label — the dev loop will not pick up a thin issue
 - Syncs dependency labels: if a blocking issue closes, remove `blocked` from downstream issues
 - Flags oversized issues: `size:L` or `size:XL` without `needs-split` → add the label
 - Checks PR state: are PRs that are fully reviewed and approved correctly labeled?
@@ -542,9 +543,12 @@ The triage loop runs every 30 minutes. Its job is **observation, not execution.*
 **What it explicitly does NOT do:**
 - Touch PR labels (that's the dev loop's job)
 - Trigger the dev loop (they run independently on their own schedules)
-- Make decisions about PR readiness (it observes, reports, and cleans)
+- Fix anything — it observes, labels, and reports
 
-<blockquote>Triage is the immune system. It doesn't build anything — it keeps the board honest so the dev loop always has accurate state to read.</blockquote>
+**Why issue quality checking belongs here:**  
+The dev loop's pre-code step needs acceptance criteria to produce a valid design doc. An issue without them produces a design doc full of assumptions — and the post-merge review will file bugs when reality diverges. Catching thin issues at triage breaks the cycle before it starts.
+
+<blockquote>Triage is the immune system. It doesn't build anything — it keeps the board honest so every downstream loop always has accurate, complete state to work from.</blockquote>
 
 ---
 
@@ -856,22 +860,27 @@ When gaps exist, the post-merge review files a precise bug issue:
 
 ```
 1. Read project config
-2. Fetch all open issues with blocked label
-3. For each blocked issue:
+2. Fetch all open issues (excluding blocked/needs-split/needs-detail)
+3. For each issue — check quality:
+   → Body empty or missing problem statement: add needs-detail label
+   → No acceptance criteria or definition of done: add needs-detail label
+   (dev loop will not pick up a needs-detail issue)
+4. Fetch all open issues with blocked label
+5. For each blocked issue:
    → Check if the blocking issue is closed
-   → If closed: remove blocked label, add comment
-4. Fetch all open issues with size:L or size:XL label
-5. For each large issue without needs-split:
+   → If closed: remove blocked label
+6. Fetch all open issues with size:L or size:XL label
+7. For each large issue without needs-split:
    → Add needs-split label
-6. Fetch all open PRs
-7. Check: any PRs from rodin with fully-approved reviews
+8. Fetch all open PRs
+9. Check: any PRs from rodin with fully-approved reviews
    that are still labeled wip?
-   → This indicates a stale wip lock — report it
-8. Nothing changed → NO_REPLY
-   Something changed → deliver Telegram notification
+   → Indicates a stale wip lock — report it
+10. Nothing changed → NO_REPLY
+    Something changed → deliver Telegram notification
 ```
 
-**The triage loop never creates or closes PRs.** It reads, labels, and reports. Clean separation of concerns.
+**Step 3 is the quality gate.** A thin issue that reaches the dev loop produces a design doc full of assumptions. Those assumptions become bugs the post-merge review has to file. Catching them here is cheaper.
 
 ---
 
