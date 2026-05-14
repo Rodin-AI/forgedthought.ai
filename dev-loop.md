@@ -728,7 +728,7 @@ Sourced from `golang/go` and `kubernetes/kubernetes`. Error wrapping, context pr
 Not "here's what secure code looks like" generically — specific attack surfaces, specific mitigations, anchored to real examples.
 
 **rodin/trading-patterns**
-Built from gargoyle's own production code. The domain reviewer isn't guessing at trading semantics — it's reading the system's own established patterns.
+Derived from industry standards and trading regulations. The domain reviewer isn't guessing at trading semantics — it's anchored to how markets actually work, not how the code happens to work today.
 
 </div>
 </div>
